@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English Reader – Luyện nghe tiếng Anh</title>
+<style>
+:root{--ink:#172033;--muted:#64748b;--line:#e2e8f0;--blue:#3563e9;--blue2:#eef2ff;--bg:#f5f7fb;--green:#0f9f76}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(135deg,#f5f7fb,#eef3ff);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;min-height:100vh}
+.wrap{max-width:980px;margin:0 auto;padding:34px 20px 50px}
+header{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.logo{width:52px;height:52px;border-radius:16px;background:var(--blue);color:white;display:grid;place-items:center;font-size:25px;box-shadow:0 8px 20px #3563e933}
+h1{font-size:clamp(25px,4vw,34px);line-height:1.15;margin:0 0 5px;letter-spacing:-.7px}
+.subtitle{margin:0;color:var(--muted);font-size:14px}
+.layout{display:grid;grid-template-columns:1fr 290px;gap:18px;align-items:start}
+.panel{background:#fff;border:1px solid #e7ebf3;border-radius:22px;padding:23px;box-shadow:0 10px 30px #1c2b4a0a}
+.panel h2{font-size:17px;margin:0 0 14px}
+textarea{width:100%;min-height:112px;resize:vertical;border:1px solid #d7deea;border-radius:13px;padding:14px 15px;font:16px/1.6 inherit;color:var(--ink);outline:none}
+textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 3px #3563e91a}
+.hint{font-size:12px;color:var(--muted);margin:7px 0 0}
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:20px 0}
+.mode{border:1px solid var(--line);border-radius:13px;padding:12px 10px;background:white;text-align:left;cursor:pointer;color:var(--ink);transition:.15s}
+.mode strong{display:block;font-size:13px;margin:5px 0 2px}
+.mode span{font-size:11px;color:var(--muted);display:block;line-height:1.4}
+.mode .emoji{font-size:19px}
+.mode.active{border-color:var(--blue);background:var(--blue2);box-shadow:inset 0 0 0 1px var(--blue)}
+.speedbox{padding:14px 15px;background:#f8faff;border:1px solid #e8edfa;border-radius:13px;margin-bottom:18px}
+.speedrow{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.speedrow label{font-size:13px;font-weight:650}
+#rateLabel{font-size:13px;color:var(--blue);font-weight:700}
+input[type=range]{width:100%;accent-color:var(--blue);margin:12px 0 3px}
+.scale{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+.actions{display:flex;gap:9px;flex-wrap:wrap}
+button{font:inherit}
+.btn{border:0;border-radius:12px;padding:11px 16px;cursor:pointer;font-weight:650;display:inline-flex;align-items:center;justify-content:center;gap:7px;transition:transform .12s,opacity .12s}
+.btn:active{transform:scale(.98)}
+.primary{background:var(--blue);color:white;box-shadow:0 5px 12px #3563e92b}
+.secondary{background:#f1f5f9;color:#334155}
+.stop{background:#fff1f2;color:#be123c}
+.wordstage{margin-top:22px;border:1px solid var(--line);border-radius:16px;padding:18px;background:#fcfdff}
+.stagehead{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:12px}
+.stagehead strong{font-size:13px}
+.pill{background:#ecfdf5;color:#047857;border-radius:100px;padding:4px 9px;font-size:11px;font-weight:700}
+#words{font-size:21px;line-height:2.05;min-height:64px}
+.word{display:inline-block;border-radius:6px;padding:0 2px;cursor:pointer;transition:background .12s,color .12s}
+.word:hover{background:#e8edff;color:#2348c7}
+.word.selected{background:#dce6ff;color:#2348c7;box-shadow:0 0 0 1px #a8bcff}
+.word.spoken{background:#d1fae5;color:#047857}
+.empty{color:#94a3b8;font-size:15px}
+.status{color:var(--muted);font-size:12px;margin-top:10px;min-height:18px}
+.side{display:flex;flex-direction:column;gap:16px}
+.tip{background:#f8faff;border:1px solid #e7edfb;border-radius:14px;padding:14px;font-size:13px;color:#475569}
+.tip b{display:block;color:#1e293b;margin-bottom:5px}
+ol{margin:0;padding-left:20px;color:#64748b;font-size:13px}
+li{margin:7px 0}
+select{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:white;color:var(--ink);font:inherit;font-size:13px}
+.foot{margin-top:18px;text-align:center;color:#8792a5;font-size:11px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.wrap{padding:22px 14px}.panel{padding:18px}.modes{gap:6px}.mode{padding:10px 7px}#words{font-size:19px}}
+@media(max-width:400px){.modes{grid-template-columns:1fr}.mode{display:flex;align-items:center;gap:10px}.mode strong{margin:0}.mode span{margin-left:auto;text-align:right;max-width:120px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">🔊</div>
+    <div><h1>English Reader</h1><p class="subtitle">Nghe, luyện phát âm và làm chủ tốc độ tiếng Anh</p></div>
+  </header>
+  <div class="layout">
+    <main class="panel">
+      <h2>1. Nhập câu tiếng Anh</h2>
+      <textarea id="inputText" placeholder="Ví dụ: The best way to learn English is to practice a little every day.">The best way to learn English is to practice a little every day.</textarea>
+      <p class="hint">Bạn có thể dán một câu hoặc một đoạn văn tiếng Anh vào đây.</p>
+
+      <h2 style="margin-top:23px">2. Chọn chế độ đọc</h2>
+      <div class="modes" role="group" aria-label="Chế độ đọc">
+        <button class="mode active" data-mode="normal"><div class="emoji">▶️</div><strong>1. Tốc độ thường</strong><span>Đọc tự nhiên</span></button>
+        <button class="mode" data-mode="speed"><div class="emoji">🐢</div><strong>2. Tùy chỉnh tốc độ</strong><span>Chậm đến nhanh</span></button>
+        <button class="mode" data-mode="click"><div class="emoji">👆</div><strong>3. Nhấn vào từ</strong><span>Đọc từ được chọn đến hết</span></button>
+      </div>
+
+      <div class="speedbox" id="speedBox" hidden>
+        <div class="speedrow"><label for="rate">Tốc độ đọc</label><span id="rateLabel">1.0× · Bình thường</span></div>
+        <input id="rate" type="range" min="0.5" max="2" step="0.1" value="1">
+        <div class="scale"><span>0.5× Rất chậm</span><span>1× Bình thường</span><span>2× Rất nhanh</span></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" id="play">▶ Phát câu</button>
+        <button class="btn secondary" id="pause">Ⅱ Tạm dừng</button>
+        <button class="btn secondary" id="resume">▶ Tiếp tục</button>
+        <button class="btn stop" id="stop">■ Dừng</button>
+      </div>
+
+      <div class="wordstage">
+        <div class="stagehead"><strong>3. Nhấn vào từ để đọc theo chế độ đang chọn</strong><span class="pill">Tương tác</span></div>
+        <div id="words" aria-label="Các từ có thể nhấn"></div>
+        <div class="status" id="status" aria-live="polite">Sẵn sàng. Chọn chế độ rồi nhấn Phát câu.</div>
+      </div>
+    </main>
+
+    <aside class="side">
+      <section class="panel">
+        <h2>Giọng đọc</h2>
+        <label for="voice" class="hint" style="display:block;margin:0 0 8px">Chọn giọng tiếng Anh (nếu có)</label>
+        <select id="voice"><option value="">Tự động chọn giọng English</option></select>
+        <p class="hint">Giọng đọc có sẵn tùy thuộc vào trình duyệt và hệ điều hành của bạn.</p>
+      </section>
+      <section class="panel">
+        <h2>Cách sử dụng</h2>
+        <ol>
+          <li>Nhập hoặc dán câu tiếng Anh.</li>
+          <li>Chọn một trong ba chế độ đọc.</li>
+          <li>Ở chế độ 2, kéo thanh để thay đổi tốc độ.</li>
+          <li>Ở chế độ 1 và 2, nhấn vào một từ để chỉ đọc riêng từ đó; chế độ 2 dùng tốc độ bạn đã chọn.</li>
+          <li>Ở chế độ 3, nhấn vào bất kỳ từ nào để đọc từ đó đến hết nội dung.</li>
+          <li>Dùng Tạm dừng, Tiếp tục hoặc Dừng khi cần.</li>
+        </ol>
+      </section>
+      <div class="tip"><b>💡 Mẹo luyện nghe</b>Hãy nghe ở tốc độ chậm trước, sau đó tăng dần tốc độ và nhấn vào những từ bạn muốn luyện phát âm.</div>
+    </aside>
+  </div>
+  <div class="foot">Sử dụng giọng đọc có sẵn trong trình duyệt (Web Speech API). Cần kết nối mạng nếu giọng tiếng Anh trên thiết bị yêu cầu.</div>
+</div>
+<script>
+(() => {
+ const textInput = document.getElementById('inputText');
+ const wordsEl = document.getElementById('words');
+ const statusEl = document.getElementById('status');
+ const rateInput = document.getElementById('rate');
+ const rateLabel = document.getElementById('rateLabel');
+ const speedBox = document.getElementById('speedBox');
+ const voiceSelect = document.getElementById('voice');
+ let mode = 'normal', selectedStart = 0, utterance = null, voices = [], wordSpans = [];
+ let activeWord = -1;
+
+ function getText(){ return textInput.value.trim(); }
+ function renderWords(){
+   const text = getText();
+   wordsEl.replaceChildren(); wordSpans = []; activeWord = -1;
+   if(!text){ const p=document.createElement('span');p.className='empty';p.textContent='Câu tiếng Anh sẽ hiển thị ở đây.';wordsEl.append(p);return; }
+   // Preserve spaces and punctuation while making each word clickable.
+   const parts = text.match(/\s+|[^\s]+/g) || [];
+   let index=0;
+   parts.forEach(part=>{
+     if(/^\s+$/.test(part)){ wordsEl.append(document.createTextNode(part)); return; }
+     const span=document.createElement('span');span.className='word';span.textContent=part;
+     span.dataset.index=String(index);span.title='Nhấn để đọc từ này đến hết';
+     span.addEventListener('click',()=>{
+       selectedStart=Number(span.dataset.index);
+       setSelected(selectedStart);
+       if(mode==='click') speakFrom(selectedStart);
+       else speakSingleWord(selectedStart);
+     });
+     wordsEl.append(span);wordSpans.push(span);index++;
+   });
+ }
+ function setSelected(i){wordSpans.forEach((s,j)=>s.classList.toggle('selected',j===i));}
+ function updateRateLabel(){
+   const r=Number(rateInput.value);
+   let desc=r<0.8?'Rất chậm':r<1?'Chậm':r===1?'Bình thường':r<1.5?'Nhanh':'Rất nhanh';
+   rateLabel.textContent=r.toFixed(1)+'× · '+desc;
+ }
+ function setMode(next){
+   mode=next;
+   document.querySelectorAll('.mode').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));
+   speedBox.hidden=mode!=='speed';
+   if(mode==='click') statusEl.textContent='Hãy nhấn vào từ bất kỳ trong câu để đọc từ đó đến hết.';
+   else if(mode==='normal') statusEl.textContent='Chế độ tốc độ thường: đọc toàn bộ nội dung.';
+   else statusEl.textContent='Chế độ tùy chỉnh: kéo thanh tốc độ rồi nhấn Phát câu.';
+ }
+ document.querySelectorAll('.mode').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
+ function chosenVoice(){
+   const uri=voiceSelect.value;
+   if(uri) return voices.find(v=>v.voiceURI===uri) || null;
+   return voices.find(v=>/^en(-|_)/i.test(v.lang) && /natural|enhanced|premium/i.test(v.name)) ||
+          voices.find(v=>/^en(-|_)/i.test(v.lang)) || null;
+ }
+ function speakSingleWord(index){
+   const text = getText();
+   if(!text){statusEl.textContent='Bạn hãy nhập câu tiếng Anh trước.';return;}
+   if(!('speechSynthesis' in window)){statusEl.textContent='Trình duyệt này chưa hỗ trợ đọc văn bản. Hãy thử Chrome hoặc Edge.';return;}
+   const wordSpan=wordSpans[index];
+   if(!wordSpan) return;
+   window.speechSynthesis.cancel();
+   utterance = new SpeechSynthesisUtterance(wordSpan.textContent);
+   utterance.lang='en-US';
+   const v=chosenVoice(); if(v){utterance.voice=v;utterance.lang=v.lang;}
+   utterance.rate=mode==='normal'?1:Number(rateInput.value);
+   wordSpans.forEach((s,j)=>s.classList.toggle('spoken',j===index));
+   statusEl.textContent='Đang đọc riêng từ: '+wordSpan.textContent;
+   utterance.onend=()=>{statusEl.textContent='Đã đọc xong từ được chọn.';};
+   utterance.onerror=(e)=>{if(e.error!=='canceled'&&e.error!=='interrupted')statusEl.textContent='Không thể phát giọng đọc. Hãy thử chọn giọng khác.';};
+   window.speechSynthesis.speak(utterance);
+ }
+ function speakFrom(startIndex=0){
+   const text=getText();
+   if(!text){statusEl.textContent='Bạn hãy nhập câu tiếng Anh trước.';return;}
+   if(!('speechSynthesis' in window)){statusEl.textContent='Trình duyệt này chưa hỗ trợ đọc văn bản. Hãy thử Chrome hoặc Edge.';return;}
+   window.speechSynthesis.cancel();
+   const remaining=wordSpans.slice(startIndex).map(s=>s.textContent).join(' ');
+   if(!remaining){statusEl.textContent='Không có nội dung để đọc.';return;}
+   utterance=new SpeechSynthesisUtterance(remaining);
+   utterance.lang='en-US';
+   const v=chosenVoice();if(v){utterance.voice=v;utterance.lang=v.lang;}
+   utterance.rate=mode==='normal'?1:Number(rateInput.value);
+   activeWord=startIndex;
+   wordSpans.forEach((s,j)=>s.classList.toggle('spoken',j===startIndex));
+   statusEl.textContent='Đang đọc'+(startIndex>0?' từ vị trí bạn chọn':' toàn bộ nội dung')+'…';
+   utterance.onboundary=(event)=>{
+     if(event.name==='word' && typeof event.charIndex==='number'){
+       const spokenText=remaining.slice(0,event.charIndex);
+       const count=(spokenText.match(/\S+/g)||[]).length;
+       const i=Math.min(startIndex+count,wordSpans.length-1);
+       if(i>=0){activeWord=i;wordSpans.forEach((s,j)=>s.classList.toggle('spoken',j===i));}
+     }
+   };
+   utterance.onend=()=>{statusEl.textContent='Đã đọc xong.';};
+   utterance.onerror=(e)=>{if(e.error!=='canceled'&&e.error!=='interrupted')statusEl.textContent='Không thể phát giọng đọc. Hãy thử chọn giọng khác.';};
+   window.speechSynthesis.speak(utterance);
+ }
+ document.getElementById('play').addEventListener('click',()=>speakFrom(0));
+ document.getElementById('pause').addEventListener('click',()=>{if(window.speechSynthesis&&window.speechSynthesis.speaking){window.speechSynthesis.pause();statusEl.textContent='Đã tạm dừng.';}});
+ document.getElementById('resume').addEventListener('click',()=>{if(window.speechSynthesis&&window.speechSynthesis.paused){window.speechSynthesis.resume();statusEl.textContent='Đang tiếp tục đọc…';}});
+ document.getElementById('stop').addEventListener('click',()=>{if(window.speechSynthesis)window.speechSynthesis.cancel();wordSpans.forEach(s=>s.classList.remove('spoken'));statusEl.textContent='Đã dừng.';});
+ rateInput.addEventListener('input',updateRateLabel);
+ textInput.addEventListener('input',()=>{if(window.speechSynthesis)window.speechSynthesis.cancel();renderWords();statusEl.textContent='Nội dung đã cập nhật. Nhấn Phát câu để nghe.';});
+ function loadVoices(){
+   if(!('speechSynthesis' in window)) return;
+   voices=window.speechSynthesis.getVoices();
+   const old=voiceSelect.value;
+   voiceSelect.replaceChildren();
+   const auto=document.createElement('option');auto.value='';auto.textContent='Tự động chọn giọng English';voiceSelect.append(auto);
+   voices.filter(v=>/^en(-|_)/i.test(v.lang)).forEach(v=>{
+     const op=document.createElement('option');op.value=v.voiceURI;op.textContent=v.name+' ('+v.lang+')';voiceSelect.append(op);
+   });
+   if([...voiceSelect.options].some(o=>o.value===old))voiceSelect.value=old;
+ }
+ voiceSelect.addEventListener('change',()=>{statusEl.textContent='Đã cập nhật giọng đọc.';});
+ if('speechSynthesis' in window){loadVoices();window.speechSynthesis.onvoiceschanged=loadVoices;}
+ renderWords();updateRateLabel();
+})();
+</script>
+</body>
+</html>
